@@ -4,37 +4,57 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Bootstrap Portfolio Page Template</title>
+    <title>Dartmouth COVID-19 Tracker</title>
     <!-- Bootstrap -->
     <link href="css/bootstrap-4.3.1.css" rel="stylesheet">
+	  
+	<!-- D3 -->
+	<script src="https://d3js.org/d3.v6.min.js"></script>
+	
+	<!-- D3 style -->
+	<style>
+	  .plot {
+		font: 10px sans-serif;
+	  }
+
+	  .axis path,
+	  .axis line {
+		fill: none;
+		stroke: #000;
+		shape-rendering: crispEdges;
+	  }
+
+	  .x.axis path {
+		display: none;
+	  }
+
+	  .line {
+		fill: none;
+		stroke: steelblue;
+		stroke-width: 1.5px;
+	  }
+	</style>
   </head>
   <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-      <a class="navbar-brand" href="#"><img src="assets/"></a>
+      <a class="navbar-brand" href="https://www.thedartmouth.com/">
+		<div style="width: 170px; height=18px; margin-bottom: 2px">
+		  <img src="images/masthead-white.png" style="width: 100%; height: 100%" alt="">
+		</div>
+	  </a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item active">
-            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+            <a class="nav-link" href="https://www.thedartmouth.com/">Home<span class="sr-only">(current)</span></a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Link</a>
-          </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Dropdown
-            </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="#">Action</a>
-              <a class="dropdown-item" href="#">Another action</a>
-              <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="#">Something else here</a>
-            </div>
+            <a class="nav-link" href="https://www.thedartmouth.com/section/covid">COVID-19 News</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link disabled" href="#">Disabled</a>
+            <a class="nav-link" href="https://www.thedartmouth.com/page/contact">Contact</a>
           </li>
         </ul>
       </div>
@@ -44,9 +64,7 @@
         <div class="container">
           <div class="row">
             <div class="col-12">
-              <h1>Lorem ipsum dolor sit.</h1>
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eligendi, deleniti, ea nisi suscipit atque tempore aspernatur harum unde veritatis neque rem dolores assumenda. Recusandae facilis dolores cum iste assumenda accusamus.</p>
-              <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more »</a></p>
+			  <div class="plot" id="main_plot"></div>
             </div>
           </div>
         </div>
@@ -192,5 +210,6 @@
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="js/popper.min.js"></script>
     <script src="js/bootstrap-4.3.1.js"></script>
+	<script src="js/plots.js"></script>
   </body>
 </html>
