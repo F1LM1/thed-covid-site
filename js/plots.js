@@ -124,8 +124,8 @@ function makePlot() {
   svg.append("line")
      .attr("x1", x.range()[0])
      .attr("x2", x.range()[1])
-     .attr("y1", y(-0.05))
-     .attr("y2", y(-0.05))
+     .attr("y1", y(0.0) + 0.5)
+     .attr("y2", y(0.0) + 0.5)
      .attr("stroke", "black")
      .attr("stroke-width", "1px")
      .style('shape-rendering', 'crispEdges');
