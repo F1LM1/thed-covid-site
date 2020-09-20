@@ -1,5 +1,5 @@
 
-metric = "quarantine";
+metricName = "tests";
 isDaily = false;
 
 metricMap = new Map([
@@ -16,12 +16,12 @@ function isDefined(val) {
 }
 
 function makeWhitelist(keys) {
-  let totalKey = `${isDaily ? 'd' : 'c'}_${metric}_total`;
-  let totalVal = `Total ${metricMap.get(metric)} ${isDaily ? 'daily' : 'cumulative'}`;
-  let studentKey = `${isDaily ? 'd' : 'c'}_${metric}_students`;
-  let studentVal = `Students ${metricMap.get(metric)} ${isDaily ? 'daily' : 'cumulative'}`;
-  let facultyKey = `${isDaily ? 'd' : 'c'}_${metric}_staff`;
-  let facultyVal = `Faculty ${metricMap.get(metric)} ${isDaily ? 'daily' : 'cumulative'}`;
+  let totalKey = `${isDaily ? 'd' : 'c'}_${metricName}_total`;
+  let totalVal = `Total ${metricMap.get(metricName)} ${isDaily ? 'daily' : 'cumulative'}`;
+  let studentKey = `${isDaily ? 'd' : 'c'}_${metricName}_students`;
+  let studentVal = `Students ${metricMap.get(metricName)} ${isDaily ? 'daily' : 'cumulative'}`;
+  let facultyKey = `${isDaily ? 'd' : 'c'}_${metricName}_staff`;
+  let facultyVal = `Faculty ${metricMap.get(metricName)} ${isDaily ? 'daily' : 'cumulative'}`;
   return {
     [totalKey]: totalVal,
     [studentKey]: studentVal,
@@ -29,51 +29,32 @@ function makeWhitelist(keys) {
   };
 }
 
-async function makePlot() {
-  dailyData = await fetch('https://zh860vat78.execute-api.us-east-1.amazonaws.com/prod/covid-data/daily')
-                   .then(response => response.json())
-                   .then(response => response.Items);
-  dailyData = dailyData.map((item) => AWS.DynamoDB.Converter.unmarshall(item));
-  dailyData = dailyData.sort((a, b) => a.date.localeCompare(b.date));
+function setMetric(newMetric) {
+  metricName = newMetric;
+  d3.select("svg").remove();
+  makePlot();
+}
 
-  cumulativeData = await fetch('https://zh860vat78.execute-api.us-east-1.amazonaws.com/prod/covid-data/cumulative')
-                   .then(response => response.json())
-                   .then(response => response.Items);
-  cumulativeData = cumulativeData.map((item) => AWS.DynamoDB.Converter.unmarshall(item));
-  cumulativeData = cumulativeData.sort((a, b) => a.date.localeCompare(b.date));
+function setDaily(newDaily) {
+  isDaily = newDaily;
+  d3.select("svg").remove();
+  makePlot();
+}
 
-  myDataJson = isDaily ? dailyData : cumulativeData;
+function makePlot() {
+  data = isDaily ? dailyData : cumulativeData;
 
-  var margin = {
-    top: 20,
-    right: 80,
-    bottom: 30,
-    left: 50
-    },
-    width = 900 - margin.left - margin.right,
-    height = 500 - margin.top - margin.bottom;
-
-  var svg = d3.select("#main_plot").append("svg")
-    .attr("width", width + margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom)
-    .append("g")
-    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-    var parseDate = d3.timeParse("%Y-%m-%d");
-
-  var x = d3.scaleTime()
+  let x = d3.scaleTime()
     .range([0, width]);
+  x = x.nice();
 
-  var y = d3.scaleLinear()
+  let y = d3.scaleLinear()
     .range([height, 0]);
+  y = y.nice();
 
-  color = d3.scaleOrdinal(d3.schemeCategory10);
+  let color = d3.scaleOrdinal(d3.schemeCategory10);
 
-  var xAxis = d3.axisBottom(x);
-
-  var yAxis = d3.axisLeft(y);
-
-  var line = d3.line()
+  let line = d3.line()
     .curve(d3.curveLinear)
     .defined(d => isDefined(d.count))
     .y(function(d) {
@@ -83,21 +64,22 @@ async function makePlot() {
     return x(d.date);
     });
 
-  var data = myDataJson;
-  keys = new Set([].concat(...data.map((point) => Object.keys(point))));
+  let svg = d3.select("#main_plot").append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+    .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+  let keys = new Set([].concat(...data.map((point) => Object.keys(point))));
   keys.delete('date');
   keys = Array.from(keys);
 
-  whitelist = makeWhitelist(keys);
+  let whitelist = makeWhitelist(keys);
   color.domain(keys.filter(function(key) {
     return key in whitelist;
   }));
 
-  data.forEach(function(d) {
-    d.date = parseDate(d.date);
-  });
-
-  metrics = color.domain().map(function(name) {
+  let metrics = color.domain().map(function(name) {
     return {
     name: name,
     values: data
@@ -111,9 +93,12 @@ async function makePlot() {
     };
   });
 
-  x.domain(d3.extent(data, function(d) {
-    return d.date;
-  }));
+  x.domain(d3.extent(
+    [].concat(
+      ...Array.from(metrics.values())
+        .map((obj) => obj.values)
+    ).map((obj) => obj.date)
+  ));
 
   y.domain([
     d3.min(metrics, function(c) {
@@ -128,7 +113,24 @@ async function makePlot() {
     })
   ]);
 
-  var legend = svg.selectAll('g')
+  let numDays = (x.domain()[1] - x.domain()[0]) / (1000 * 24 * 60 * 60);
+  let daysPerTick = Math.max(Math.round(numDays / 15), 1);
+  let xAxis = d3.axisBottom(x);
+  xAxis.ticks(d3.timeDay.filter(d => d3.timeDay.count(0, d) % daysPerTick === 0))
+       .tickFormat(d3.timeFormat('%b %d'))
+       .tickSizeOuter(0);
+  let yAxis = d3.axisLeft(y);
+
+  svg.append("line")
+     .attr("x1", x.range()[0])
+     .attr("x2", x.range()[1])
+     .attr("y1", y(-0.05))
+     .attr("y2", y(-0.05))
+     .attr("stroke", "black")
+     .attr("stroke-width", "1px")
+     .style('shape-rendering', 'crispEdges');
+
+  let legend = svg.selectAll('g')
     .data(metrics)
     .enter()
     .append('g')
@@ -167,9 +169,9 @@ async function makePlot() {
     .attr("y", 6)
     .attr("dy", ".71em")
     .style("text-anchor", "end")
-    .text("count (ºF)");
+    .text("count");
 
-  var metric = svg.selectAll(".metric")
+  let metric = svg.selectAll(".metric")
     .data(metrics)
     .enter().append("g")
     .attr("class", "metric");
@@ -212,7 +214,7 @@ async function makePlot() {
       return whitelist[d.name];
     });
 
-  var mouseG = svg.append("g")
+  let mouseG = svg.append("g")
     .attr("class", "mouse-over-effects");
 
   mouseG.append("path") // this is the black vertical line to follow mouse
@@ -222,9 +224,9 @@ async function makePlot() {
     .style("stroke-dasharray", "1 1")
     .style("opacity", "0");
 
-  var lines = document.getElementsByClassName('line');
+  let lines = document.getElementsByClassName('line');
 
-  var mousePerLine = mouseG.selectAll('.mouse-per-line')
+  let mousePerLine = mouseG.selectAll('.mouse-per-line')
     .data(metrics)
     .enter()
     .append("g")
@@ -264,10 +266,10 @@ async function makePlot() {
       .style("opacity", "1");
     })
     .on('mousemove', (event) => { // mouse moving over canvas
-    var mouse = d3.pointer(event);
+    let mouse = d3.pointer(event);
     d3.select(".mouse-line")
       .attr("d", function() {
-      var d = "M" + mouse[0] + "," + height;
+      let d = "M" + mouse[0] + "," + height;
       d += " " + mouse[0] + "," + 0;
       return d;
       });
@@ -275,7 +277,7 @@ async function makePlot() {
     d3.selectAll(".mouse-per-line")
       .attr("transform", function(d, i) {
       //console.log(width/mouse[0])
-      var xDate = x.invert(mouse[0]),
+      let xDate = x.invert(mouse[0]),
       bisect = d3.bisector(function(d) { return d.date; }).center;
       idx = bisect(d.values, xDate);
       
@@ -294,8 +296,39 @@ async function makePlot() {
       return "translate(" + xpos + "," + ypos +")";
       });
     });
-
-  return myDataJson;
 }
 
-myDataJson = makePlot();
+async function initialize() {
+  dailyData = await fetch('https://zh860vat78.execute-api.us-east-1.amazonaws.com/prod/covid-data/daily')
+    .then(response => response.json())
+    .then(response => response.Items);
+  dailyData = dailyData.map((item) => AWS.DynamoDB.Converter.unmarshall(item));
+  dailyData = dailyData.sort((a, b) => a.date.localeCompare(b.date));
+
+  cumulativeData = await fetch('https://zh860vat78.execute-api.us-east-1.amazonaws.com/prod/covid-data/cumulative')
+    .then(response => response.json())
+    .then(response => response.Items);
+  cumulativeData = cumulativeData.map((item) => AWS.DynamoDB.Converter.unmarshall(item));
+  cumulativeData = cumulativeData.sort((a, b) => a.date.localeCompare(b.date));
+
+  let parseDate = d3.timeParse("%Y-%m-%d");
+  dailyData.forEach(function(d) {
+    d.date = parseDate(d.date);
+  });
+  cumulativeData.forEach(function(d) {
+    d.date = parseDate(d.date);
+  });
+
+  makePlot();
+}
+
+margin = {
+  top: 20,
+  right: 80,
+  bottom: 30,
+  left: 50
+  },
+  width = 900 - margin.left - margin.right,
+  height = 500 - margin.top - margin.bottom;
+
+initialize();

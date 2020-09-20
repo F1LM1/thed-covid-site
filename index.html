@@ -17,32 +17,39 @@
     <!-- D3 style -->
     <style>
       .plot {
-      font: 10px sans-serif;
+        font: 10px sans-serif;
       }
 
       .axis path,
       .axis line {
-      fill: none;
-      stroke: #000;
-      shape-rendering: crispEdges;
+        fill: none;
+        stroke: #000;
+        shape-rendering: crispEdges;
       }
 
       .x.axis path {
-      display: none;
+        display: none;
       }
 
       .line {
-      fill: none;
-      stroke: steelblue;
-      stroke-width: 1.5px;
+        fill: none;
+        stroke: steelblue;
+        stroke-width: 1.5px;
+      }
+      
+      footer {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        color:#fff;
       }
     </style>
   </head>
   <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <a class="navbar-brand" href="https://www.thedartmouth.com/">
-		<div style="width: 170px; height: 18px; margin-bottom: 2px">
-		  <img src="images/masthead-white.png" style="width: 100%; height: 100%" alt="">
+		<div style="width: 113px; height: 12px; margin-bottom: 20px; margin-right: 55px">
+		  <img src="images/masthead-white.png" style="width: 150%; height: 150%" alt="">
 		</div>
 	  </a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -67,143 +74,57 @@
         <div class="container">
           <div class="row">
             <div class="col-12">
-			  <div class="plot" id="main_plot"></div>
+			        <div class="plot" id="main_plot"></div>
             </div>
           </div>
         </div>
       </div>
-    </section>
-    <section>
-      <div class="container">
-        <div class="row">
-          <div class="col-12 text-center">
-            <h1>Lorem ipsum dolor sit amet</h1>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quibusdam, magni, doloribus, possimus eum sapiente deleniti doloremque fugit ut expedita molestiae iusto debitis eveniet modi obcaecati ipsam quos quis labore dicta.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-    <section>
-      <div class="container mt-2">
-        <div class="row">
-          <div class="col-md-4 col-12">
-            <ul class="list-unstyled">
-              <li class="media">
-                <img class="mr-3" src="images/35X35.gif" alt="Generic placeholder image">
-                <div class="media-body">
-                  <h5 class="mt-0 mb-1">List-based media object</h5>
-                  Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin.
-                </div>
-              </li>
-            </ul>
-          </div>
-          <div class="col-md-4 col-12">
-            <ul class="list-unstyled">
-              <li class="media">
-                <img class="mr-3" src="images/35X35.gif" alt="Generic placeholder image">
-                <div class="media-body">
-                  <h5 class="mt-0 mb-1">List-based media object</h5>
-                  Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin.
-                </div>
-              </li>
-            </ul>
-          </div>
-          <div class="col-md-4 col-12">
-            <ul class="list-unstyled">
-              <li class="media">
-                <img class="mr-3" src="images/35X35.gif" alt="Generic placeholder image">
-                <div class="media-body">
-                  <h5 class="mt-0 mb-1">List-based media object</h5>
-                  Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin.
-                </div>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </section>
-    <section>
-      <div class="container">
-        <div class="row">
-          <div class="col-12 text-center">
-            <h2>Latest Work</h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Officia, et, placeat !</p>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-6 col-12 text-center">
-            <img class="img-fluid" src="images/400x400.gif" alt="">
-            <h4>Lorem ipsum dolor sit amet, consectetur elit</h4>
-            <h6>Lorem ipsum dolor sit amet, consectetur elit</h6>
-          </div>
-          <div class="col-md-6 col-12 text-center mt-md-0 mt-2">
-            <img class="img-fluid" src="images/400x400.gif" alt="">
-            <h4>Lorem ipsum dolor sit amet, consectetur elit</h4>
-            <h6>Lorem ipsum dolor sit amet, consectetur elit</h6>
-          </div>
-        </div>
-        <div class="row mt-2">
-          <div class="col-md-3 col-6"><img class="img-fluid float-right" src="images/200x200.gif" alt=""></div>
-          <div class="col-md-3 col-6"><img class="img-fluid float-left" src="images/200x200.gif" alt=""></div>
-          <div class="col-md-3 col-6 mt-md-0 mt-1"><img class="img-fluid float-right" src="images/200x200.gif" alt=""></div>
-          <div class="col-md-3 col-6 mt-md-0 mt-1"><img class="img-fluid float-left" src="images/200x200.gif" alt=""></div>
-        </div>
-        <hr>
-        <div class="row">
-          <div class="col-md-3 col-6"><img class="img-fluid float-right" src="images/200x200.gif" alt=""></div>
-          <div class="col-md-3 col-6"><img class="img-fluid float-left" src="images/200x200.gif" alt=""></div>
-          <div class="col-md-3 col-6 mt-md-0 mt-1"><img class="img-fluid float-right" src="images/200x200.gif" alt=""></div>
-          <div class="col-md-3 col-6 mt-md-0 mt-1"><img class="img-fluid float-left" src="images/200x200.gif" alt=""></div>
-        </div>
-      </div>
-    </section>
-    <hr>
-    <section>
-      <div class="container">
-        <div class="row">
-          <div class="col-12 text-center">
-            <h1>Lorem ipsum dolor sit amet</h1>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quibusdam, magni, doloribus, possimus eum sapiente deleniti doloremque fugit ut expedita molestiae iusto debitis eveniet modi obcaecati ipsam quos quis labore dicta.</p>
-            <button type="button" class="btn btn-success">Get in touch</button>
-          </div>
-        </div>
-      </div>
-    </section>
-    <hr>
-    <div class="section">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-4 col-12">
-            <h3 class="text-center">WHO WE ARE</h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Repellendus, ducimus, sit, quibusdam quidem recusandae veniam eos quod error nisi repellat excepturi laboriosam aspernatur suscipit possimus consectetur dolores nihil labore quas eius illo accusamus nulla sed blanditiis porro accusantium. Perspiciatis, perferendis!</p>
-          </div>
-          <div class="col-md-4 col-12">
-            <h3 class="text-center">GET IN TOUCH</h3>
-            <address class="text-center">
-              <strong>MyCompany, Inc.</strong><br>
-              Sunny Autumn Plaza, Grand Coulee,<br>
-              CA, 91308-4075, US<br>
-              <abbr title="Phone">P:</abbr> (123) 456-7890
-            </address>
-          </div>
-          <div class="col-md-4 col-12">
-            <h3 class="text-center">NEWSLETTER</h3>
-            <form>
-              <div class="form-group col-12">
-                <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
-                <button type="submit" class="btn btn-dark mt-2">Subscribe</button>
+      <div class="card border-0">
+        <div class="container">
+          <div class="row justify-content-md-center">
+            <div class="col-2">
+              <div id="isDailyButtons" class="btn-group btn-group-toggle" data-toggle="buttons">
+                <label class="btn btn-secondary">
+                  <input type="radio" name="dailyOptions" id="dailyButton" autocomplete="off"> Daily
+                </label>
+                <label class="btn btn-secondary active">
+                  <input type="radio" name="dailyOptions" id="cumulativeButton" autocomplete="off" checked> Cumulative
+                </label>
               </div>
-            </form>
+            </div>
+            <div class="col-2"></div>
+            <div class="col-4">
+              <div id="metricButtons" class="btn-group btn-group-toggle" data-toggle="buttons">
+                <label class="btn btn-light active">
+                  <input type="radio" name="dailyOptions" id="testsButton" autocomplete="off"> Tests
+                </label>
+                <label class="btn btn-primary">
+                  <input type="radio" name="dailyOptions" id="positiveButton" autocomplete="off"> Positive
+                </label>
+                <label class="btn btn-success">
+                  <input type="radio" name="dailyOptions" id="confirmedButton" autocomplete="off"> Confirmed
+                </label>
+                <label class="btn btn-danger">
+                  <input type="radio" name="dailyOptions" id="activeButton" autocomplete="off"> Active
+                </label>
+                <label class="btn btn-warning">
+                  <input type="radio" name="dailyOptions" id="quarantineButton" autocomplete="off"> Quarantine
+                </label>
+                <label class="btn btn-dark">
+                  <input type="radio" name="dailyOptions" id="isolationButton" autocomplete="off"> Isolation
+                </label>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </section>    
     <hr>
-    <footer class="text-center">
+    <footer class="footer text-center bg-dark">
       <div class="container">
         <div class="row">
           <div class="col-12">
-            <p>Copyright © MyCompany. All rights reserved.</p>
+            <p>Copyright 2020</p>
           </div>
         </div>
       </div>
@@ -213,6 +134,30 @@
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="js/popper.min.js"></script>
     <script src="js/bootstrap-4.3.1.js"></script>
-	  <script src="js/plots.js"></script>
+    <script src="js/plots.js"></script>
+    <script>
+      $("#isDailyButtons :input").change(function() {
+        if (this.id == 'cumulativeButton') {
+          setDaily(false);
+        } else {
+          setDaily(true);
+        }
+      });
+      $("#metricButtons :input").change(function() {
+        if (this.id == 'testsButton') {
+          setMetric('tests');
+        } else if (this.id == 'positiveButton') {
+          setMetric('positive');
+        } else if (this.id == 'confirmedButton') {
+          setMetric('confirmed');
+        } else if (this.id == 'activeButton') {
+          setMetric('active');
+        } else if (this.id == 'quarantineButton') {
+          setMetric('quarantine');
+        } else {
+          setMetric('isolation');
+        }
+      });
+    </script>
   </body>
 </html>
