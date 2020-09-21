@@ -31,13 +31,13 @@ function makeWhitelist(keys) {
 
 function setMetric(newMetric) {
   metricName = newMetric;
-  d3.select("svg").remove();
+  d3.select("#main_plot").selectAll("*").remove();
   makePlot();
 }
 
 function setDaily(newDaily) {
   isDaily = newDaily;
-  d3.select("svg").remove();
+  d3.select("#main_plot").selectAll("*").remove();
   makePlot();
 }
 
@@ -64,11 +64,15 @@ function makePlot() {
     return x(d.date);
     });
 
-  let svg = d3.select("#main_plot").append("svg")
-    .attr("width", width + margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom)
-    .append("g")
-    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+    svg = d3.select("#main_plot")
+            .append("div")
+            .classed("svg-container", true)
+            .append("svg")
+            .attr("preserveAspectRatio", "xMinYMin meet")
+            .attr("viewBox", `0 0 ${width + margin.left + margin.right} ${height + margin.top + margin.bottom}`)
+            .classed("svg-content-responsive", true)
+            .append("g")
+            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
   let keys = new Set([].concat(...data.map((point) => Object.keys(point))));
   keys.delete('date');

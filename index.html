@@ -19,7 +19,11 @@
       .plot {
         font: 10px sans-serif;
       }
-
+      
+      .axis {
+        font: 10px sans-serif;
+      }
+      
       .axis path,
       .axis line {
         fill: none;
@@ -36,7 +40,27 @@
         stroke: steelblue;
         stroke-width: 1.5px;
       }
-            
+      
+      .svg-container {
+        display: inline-block;
+        position: relative;
+        width: 100%;
+        padding-bottom: 55.56%; /* aspect ratio */
+        vertical-align: middle;
+        overflow: hidden;
+        max-width: 900px;
+      }
+      .svg-container-container{
+        max-height: 500px;
+        overflow: hidden;
+      }
+      .svg-content-responsive {
+        display: inline-block;
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+          
       #body {
         min-height: calc(100vh - 66px);
         padding-bottom: 80px;
@@ -83,7 +107,9 @@
           <div class="container">
             <div class="row">
               <div class="col-12">
-                <div class="plot" id="main_plot"></div>
+                <div class="svg-container-container">
+                  <div class="plot" id="main_plot"></div>
+                </div>
               </div>
             </div>
           </div>
