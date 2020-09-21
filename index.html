@@ -36,12 +36,19 @@
         stroke: steelblue;
         stroke-width: 1.5px;
       }
-      
+            
+      #body {
+        min-height: calc(100vh - 66px);
+        padding-bottom: 80px;
+        clear: both;
+      }
+
       footer {
-        position: absolute;
-        bottom: 0;
-        width: 100%;
-        color:#fff;
+        clear: both;
+        position: relative;
+        height: 40px;
+        margin-top: -40px;
+        color: #fff;
       }
     </style>
   </head>
@@ -69,57 +76,60 @@
         </ul>
       </div>
     </nav>
-    <section>
-      <div class="jumbotron text-center mt-2">
-        <div class="container">
-          <div class="row">
-            <div class="col-12">
-			        <div class="plot" id="main_plot"></div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="card border-0">
-        <div class="container">
-          <div class="row justify-content-md-center">
-            <div class="col-2">
-              <div id="isDailyButtons" class="btn-group btn-group-toggle" data-toggle="buttons">
-                <label class="btn btn-secondary">
-                  <input type="radio" name="dailyOptions" id="dailyButton" autocomplete="off"> Daily
-                </label>
-                <label class="btn btn-secondary active">
-                  <input type="radio" name="dailyOptions" id="cumulativeButton" autocomplete="off" checked> Cumulative
-                </label>
-              </div>
-            </div>
-            <div class="col-2"></div>
-            <div class="col-4">
-              <div id="metricButtons" class="btn-group btn-group-toggle" data-toggle="buttons">
-                <label class="btn btn-light active">
-                  <input type="radio" name="dailyOptions" id="testsButton" autocomplete="off"> Tests
-                </label>
-                <label class="btn btn-primary">
-                  <input type="radio" name="dailyOptions" id="positiveButton" autocomplete="off"> Positive
-                </label>
-                <label class="btn btn-success">
-                  <input type="radio" name="dailyOptions" id="confirmedButton" autocomplete="off"> Confirmed
-                </label>
-                <label class="btn btn-danger">
-                  <input type="radio" name="dailyOptions" id="activeButton" autocomplete="off"> Active
-                </label>
-                <label class="btn btn-warning">
-                  <input type="radio" name="dailyOptions" id="quarantineButton" autocomplete="off"> Quarantine
-                </label>
-                <label class="btn btn-dark">
-                  <input type="radio" name="dailyOptions" id="isolationButton" autocomplete="off"> Isolation
-                </label>
+
+    <div id="body">
+      <section>
+        <div class="jumbotron text-center mt-2">
+          <div class="container">
+            <div class="row">
+              <div class="col-12">
+                <div class="plot" id="main_plot"></div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-    </section>    
-    <hr>
+        <div class="card border-0">
+          <div class="container">
+            <div class="row justify-content-md-center">
+              <div class="col-2">
+                <div id="isDailyButtons" class="btn-group btn-group-toggle" data-toggle="buttons">
+                  <label class="btn btn-secondary">
+                    <input type="radio" name="dailyOptions" id="dailyButton" autocomplete="off"> Daily
+                  </label>
+                  <label class="btn btn-secondary active">
+                    <input type="radio" name="dailyOptions" id="cumulativeButton" autocomplete="off" checked> Cumulative
+                  </label>
+                </div>
+              </div>
+              <div class="col-2"></div>
+              <div class="col-4">
+                <div id="metricButtons" class="btn-group btn-group-toggle" data-toggle="buttons">
+                  <label class="btn btn-light active">
+                    <input type="radio" name="dailyOptions" id="testsButton" autocomplete="off"> Tests
+                  </label>
+                  <label class="btn btn-primary">
+                    <input type="radio" name="dailyOptions" id="positiveButton" autocomplete="off"> Positive
+                  </label>
+                  <label class="btn btn-success">
+                    <input type="radio" name="dailyOptions" id="confirmedButton" autocomplete="off"> Confirmed
+                  </label>
+                  <label class="btn btn-danger">
+                    <input type="radio" name="dailyOptions" id="activeButton" autocomplete="off"> Active
+                  </label>
+                  <label class="btn btn-warning">
+                    <input type="radio" name="dailyOptions" id="quarantineButton" autocomplete="off"> Quarantine
+                  </label>
+                  <label class="btn btn-dark">
+                    <input type="radio" name="dailyOptions" id="isolationButton" autocomplete="off"> Isolation
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+    
     <footer class="footer text-center bg-dark">
       <div class="container">
         <div class="row">
